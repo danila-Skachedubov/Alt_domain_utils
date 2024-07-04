@@ -6,3 +6,19 @@
 # 
 # SPDX-License-Identifier: GPL-2.0-or-later 
 #
+
+set -euo pipefail
+
+PROG_VERSION='0.0.1'
+
+show_usage() {
+    cat << EOF
+Usage: $0 [options]
+
+Options:
+  -l, --list        print the list of domain validation checks
+  -v, --version     print program version and exit
+  -h, --help        show this help message
+
+EOF
+}

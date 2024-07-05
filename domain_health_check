@@ -22,3 +22,7 @@ Options:
 
 EOF
 }
+
+TEMP=$(getopt -n "$PROG" -o "l,V,h" -l "list,version,help" -- "$@") || show_usage
+eval set -- "$TEMP"
+

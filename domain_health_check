@@ -10,6 +10,15 @@
 set -euo pipefail
 
 PROG_VERSION='0.0.1'
+PROG="${0##*/}"
+
+print_version()
+{
+	cat <<EOF
+$PROG version $PROG_VERSION
+EOF
+	exit
+}
 
 show_usage() {
     cat << EOF
@@ -17,12 +26,34 @@ Usage: $0 [options]
 
 Options:
   -l, --list        print the list of domain validation checks
-  -v, --version     print program version and exit
+  -V, --version     print program version and exit
   -h, --help        show this help message
 
 EOF
+  exit
 }
 
 TEMP=$(getopt -n "$PROG" -o "l,V,h" -l "list,version,help" -- "$@") || show_usage
 eval set -- "$TEMP"
+
+print_checks() {
+    cat << EOF
+Domain validation checks:
+1. Check if the domain name is valid.
+2.
+3. 
+4.
+EOF
+    exit
+}
+
+while true; do
+    case "$1" in
+        -l|--list) print_checks; shift ;;
+        -V|--version) print_version shift ;;
+        -h|--help) show_usage; shift ;;
+        --) shift; break ;;
+        *) show_usage ;;
+    esac
+done
 

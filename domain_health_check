@@ -36,6 +36,12 @@ EOF
 TEMP=$(getopt -n "$PROG" -o "l,V,h" -l "list,version,help" -- "$@") || show_usage
 eval set -- "$TEMP"
 
+log_message() {
+    local log_level="$1"
+    local message="$2"
+    echo "[$log_level] $message"
+}
+
 print_checks() {
     cat << EOF
 Domain validation checks:

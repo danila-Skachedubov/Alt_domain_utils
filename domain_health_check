@@ -45,12 +45,25 @@ log_message() {
 print_checks() {
     cat << EOF
 Domain validation checks:
-1. Check if the domain name is valid.
+1. View general information about the domain.
 2.
 3. 
 4.
 EOF
     exit
+}
+
+check_domain_info() {
+    local domain_ip="127.0.0.1"
+    log_message "INFO" "Checking domain information for IP: $domain_ip"
+
+    if command -v samba-tool &> /dev/null; then
+        samba-tool domain info "$domain_ip"
+        log_message "INFO" "Domain information check completed successfully."
+    else
+        log_message "ERROR" "samba-tool command not found."
+        exit 1
+    fi
 }
 
 while true; do
@@ -63,3 +76,13 @@ while true; do
     esac
 done
 
+log_message "INFO" "Diagnostic tool started"
+check_domain_info
+
+# TODO: Добавить проверки:
+# Предоставляемых служб(smbclient -L localhost -Uadministrator)
+# Наличия nameserver 127.0.0.1 в /etc/resolv.conf: 
+# Имён хостов: адрес _kerberos._udp.*адрес домена с точкой
+#              адрес _ldap._tcp.*адрес домена с точкой:
+#              адрес хоста.*адрес домена с точкой:
+# Проверка Kerberos
